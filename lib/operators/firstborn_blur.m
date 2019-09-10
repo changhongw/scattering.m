@@ -86,6 +86,13 @@ else
     %% S. Spiraled
     data = subsasgn(zeros(output_size),subsasgn_structure, ...
         ifft_multiply(data_ft,phi,log2_resampling,colons,subscripts));
+        
+        totalScale = spiraled_size(2)*spiraled_size(3);
+        if ~(size(data,2)==totalScale)
+            diffScale_side = size(data,2) - totalScale;
+            data(:,1:diffScale_side/2)=[];
+            data(:,end-diffScale_side/2+1:end)=[];
+        end
     data = reshape(data,spiraled_size);
 end
 end
